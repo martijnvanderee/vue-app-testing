@@ -5,7 +5,7 @@ console.log('test');
 
 <template>
   <div>
-    <h1>Hello martij</h1>
+    <h1 class="text-xl font-bold underline">Hello world1!</h1>
     <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>
