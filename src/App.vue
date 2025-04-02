@@ -2,7 +2,7 @@
 import { useFetch } from '@vueuse/core';
 
 const { isFetching, error, data } = useFetch(
-  'http://vue-deno-39scww-31cecd-168-119-233-159.traefik.me/dinosaurs'
+  'http://vue-deno-39scww-31cecd-168-119-233-159.traefik.me'
 );
 
 console.log('test');
@@ -13,7 +13,7 @@ import Header from './components/Header.vue';
 </script>
 
 <template>
-  test 1:
+  test 3:
   <Header />
   <Products />
 </template>
