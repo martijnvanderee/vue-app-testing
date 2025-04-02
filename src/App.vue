@@ -13,6 +13,7 @@ import Header from './components/Header.vue';
 </script>
 
 <template>
+  test header {{ data }}
   <Header />
   <Products />
 </template>
