@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import { useFetch } from '@vueuse/core';
 
-const options = (ctx) => {
-  window.location.href = ctx.data;
-};
-
 const takePayments = () => {
   useFetch(
     'http://vue-deno-39scww-31cecd-168-119-233-159.traefik.me/create-payment-intent',
