@@ -1,9 +1,5 @@
 <script setup lang="ts">
 import { useFetch } from '@vueuse/core';
-import { loadStripe } from '@stripe/stripe-js';
-
-console.log('test');
-console.log('data', data, 'error:', error, isFetching);
 
 const takePayments = () => {
   console.log('takePayments');
@@ -12,6 +8,10 @@ const takePayments = () => {
   ).post({ items: 8 });
 
   console.log('takePayments 1');
+  console.log('test');
+  console.log('data:', data, 'error:', error, isFetching);
+
+  // window.location.href = data.value;
 };
 
 import Products from './components/Products.vue';
