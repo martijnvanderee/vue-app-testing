@@ -1,10 +1,29 @@
+<script setup lang="ts">
+import { defineProps } from 'vue';
+import Product from './Product.vue';
+
+import type { Product as IProduct } from '../types';
+
+interface Props {
+  products: IProduct[];
+}
+
+const props = defineProps<Props>();
+</script>
+
 <template>
   <section class="py-8 antialiased md:py-12">
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
       <div
         class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-3 xl:grid-cols-4"
       >
-        <div
+        <Product v-for="product in props.products" :product="product" />
+      </div>
+    </div>
+  </section>
+</template>
+
+<!--         <div
           class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
         >
           <div class="h-56 w-full">
@@ -2014,8 +2033,4 @@
               </button>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</template>
+        </div> -->

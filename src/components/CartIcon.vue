@@ -1,7 +1,10 @@
 <script setup lang="ts">
-const props = defineProps<{
-  AmountOfProducts: number;
-}>();
+import { useCartStore } from '../store/cart';
+import { storeToRefs } from 'pinia';
+
+const cart = useCartStore();
+
+const { getTotalAmount } = storeToRefs(cart);
 </script>
 
 <template>
@@ -26,7 +29,7 @@ const props = defineProps<{
     <div
       class="cart w-4 h-4 absolute -top-1 -right-1 bg-red-700 flex justify-center items-center"
     >
-      <div>{{ props.AmountOfProducts }}</div>
+      <div>{{ getTotalAmount }}</div>
     </div>
   </div>
 </template>

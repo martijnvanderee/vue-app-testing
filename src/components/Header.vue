@@ -81,7 +81,7 @@ import CartIcon from './CartIcon.vue';
             class="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
           >
             <span class="sr-only"> Cart </span>
-            <CartIcon :AmountOfProducts="3" />
+            <CartIcon />
             <span class="hidden sm:flex">My Cart</span>
             <svg
               class="hidden sm:flex w-4 h-4 text-gray-900 dark:text-white ms-1"
