@@ -11,9 +11,7 @@ const props = defineProps<Props>();
 const { createProduct, IsProductInCart, increaseAmount } = useCartStore();
 
 const addProduct = () => {
-  console.log('IsProductInCart:', IsProductInCart);
-  console.log('addProduct id:', props.product.id);
-  IsProductInCart
+  IsProductInCart(props.product.id)
     ? increaseAmount(props.product.id)
     : createProduct(props.product);
 };

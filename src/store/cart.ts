@@ -31,12 +31,11 @@ export const useCartStore = defineStore(
 
             //     return productFileToProduct(ProductFile);
             // },
-            IsProductInCart: computed((): boolean => {
-                return cart.getTotalAmount.value === 0 ? false : true;
+            IsProductInCart: ((id: string): boolean => {
+                return state.some((product) => {
+                    return product.id === id
+                })
             }),
-            getTotalAmount: computed(() =>
-                state.reduce((partialSum, product) => partialSum + product.amount, 0)
-            ),
             // getTotalPrice: computed(() =>
             //     state.reduce(
             //         (partialSum, product) =>
@@ -47,6 +46,10 @@ export const useCartStore = defineStore(
             IsProductInState: computed(
                 (): boolean => !(cart.getTotalAmount.value === 0)
             ),
+            getTotalAmount: computed(() =>
+                state.reduce((partialSum, product) => partialSum + product.amount, 0)
+            ),
+
             increaseAmount: (id: string) => {
                 const index = findIndexById(id);
 
@@ -71,13 +74,15 @@ export const useCartStore = defineStore(
             },
             createProduct: (product: Product) => {
 
-                console.log("state:", state, product)
                 state.push({ product, amount: 1, id: product.id });
             },
             emptyCart: state.splice(0),
             deleteProduct: (id: string) => {
                 if (!IsInDatabase(id)) return;
             },
+            getCart: computed(() => {
+                return state
+            })
         };
 
 
