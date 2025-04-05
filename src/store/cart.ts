@@ -102,7 +102,7 @@ export const useCartStore = defineStore(
                         return ctx;
                     },
                 }
-            ).post({ items: 8 });
+            ).post(state);
         };
 
         return cart;
