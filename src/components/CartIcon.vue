@@ -2,9 +2,9 @@
 import { useCartStore } from '../store/cart';
 import { storeToRefs } from 'pinia';
 
-const cart = useCartStore();
+const store = useCartStore();
 
-const { getTotalAmount } = storeToRefs(cart);
+const { getTotalAmount } = storeToRefs(store);
 </script>
 
 <template>
@@ -27,7 +27,7 @@ const { getTotalAmount } = storeToRefs(cart);
       />
     </svg>
     <div
-      class="cart w-4 h-4 absolute -top-1 -right-1 bg-red-700 flex justify-center items-center"
+      class="cart w-4 h-4 absolute -top-1 -right-1 bg-red-700 flex justify-center"
     >
       <div>{{ getTotalAmount }}</div>
     </div>

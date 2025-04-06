@@ -1,47 +1,35 @@
 <script setup lang="ts">
-import { useFetch } from '@vueuse/core';
-import { ref } from 'vue';
+import { onBeforeMount } from 'vue';
+import { useProductStore } from './store/product';
 import { useCartStore } from './store/cart';
-import { storeToRefs } from 'pinia';
+import { useFetch } from '@vueuse/core';
 
 import Products from './components/Products.vue';
 import Header from './components/Header.vue';
 
-import { type Product as IProduct } from './types';
+const { products, getProducts } = useProductStore();
+const { cart } = useCartStore();
 
-const products = ref<IProduct[]>();
-
-const cart = useCartStore();
-
-const { getCart } = storeToRefs(cart);
-
-useFetch(
-  'http://vue-deno-39scww-31cecd-168-119-233-159.traefik.me/list-of-products',
-  {
-    afterFetch(ctx) {
-      products.value = JSON.parse(ctx.data);
-
-      return ctx;
-    },
-  }
-).get();
+onBeforeMount(() => {
+  getProducts();
+});
 
 const takePayments = () => {
-  console.log('takePayments getCart', getCart.value);
-  // useFetch(
-  //   'http://vue-deno-39scww-31cecd-168-119-233-159.traefik.me/create-payment-intent',
-  //   {
-  //     afterFetch(ctx) {
-  //       window.location.href = ctx.data;
+  useFetch(
+    'http://vue-deno-39scww-31cecd-168-119-233-159.traefik.me/create-payment-intent',
+    {
+      afterFetch(ctx) {
+        window.location.href = ctx.data;
 
-  //       return ctx;
-  //     },
-  //   }
-  // ).post({ items: 8 });
+        return ctx;
+      },
+    }
+  ).post({ items: 8 });
 };
 </script>
 
 <template>
+  {{ cart }}
   <button @click="takePayments">payments</button>
   <Header />
   <div>

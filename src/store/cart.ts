@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
 import { useFetch } from '@vueuse/core';
 import type { Cart, Product } from "../types/index"
 // import { Product, Cart } from "../types";
@@ -7,92 +7,76 @@ import type { Cart, Product } from "../types/index"
 
 // import { useRuntimeConfig } from "nuxt/app";
 
+
+
 export const useCartStore = defineStore(
     "cart",
     () => {
-        const state = reactive<Cart[]>([]);
-        const products = ref<Product[]>()
+        const cart = ref<Cart[]>([]);
 
-        let cart = {
-            getProducts: computed(() => useFetch(
-                'http://vue-deno-39scww-31cecd-168-119-233-159.traefik.me/list-of-products',
-                {
-                    afterFetch(ctx) {
-                        products.value = JSON.parse(ctx.data);
+        // getProduct: async (id: string): Promise<Product> => {
+        //     const ProductFile = await queryContent("products")
+        //         .where({ id })
+        //         .findOne();
 
-                        return ctx;
-                    },
-                }
-            ).get()),
-            // getProduct: async (id: string): Promise<Product> => {
-            //     const ProductFile = await queryContent("products")
-            //         .where({ id })
-            //         .findOne();
-
-            //     return productFileToProduct(ProductFile);
-            // },
-            IsProductInCart: ((id: string): boolean => {
-                return state.some((product) => {
-                    return product.id === id
-                })
-            }),
-            // getTotalPrice: computed(() =>
-            //     state.reduce(
-            //         (partialSum, product) =>
-            //             partialSum + product.amount * product.product.price,
-            //         0
-            //     )
-            // ),
-            IsProductInState: computed(
-                (): boolean => !(cart.getTotalAmount.value === 0)
-            ),
-            getTotalAmount: computed(() =>
-                state.reduce((partialSum, product) => partialSum + product.amount, 0)
-            ),
-
-            increaseAmount: (id: string) => {
-                const index = findIndexById(id);
-
-
-                state[index] = {
-                    amount: state[index].amount + 1,
-                    id,
-                    product: state[index].product,
-                };
-
-            },
-            decreaseAmount: (id: string) => {
-                const index = findIndexById(id);
-
-                if (index === -1) return;
-
-                state[index] = {
-                    amount: state[index].amount - 1,
-                    id,
-                    product: state[index].product,
-                };
-            },
-            createProduct: (product: Product) => {
-
-                state.push({ product, amount: 1, id: product.id });
-            },
-            emptyCart: state.splice(0),
-            deleteProduct: (id: string) => {
-                if (!IsInDatabase(id)) return;
-            },
-            getCart: computed(() => {
-                return state
+        //     return productFileToProduct(ProductFile);
+        // },
+        const IsProductInCart = ((id: string): boolean => {
+            return cart.value.some((product) => {
+                return product.id === id
             })
-        };
+        })
+        // getTotalPrice: computed(() =>
+        //     state.reduce(
+        //         (partialSum, product) =>
+        //             partialSum + product.amount * product.product.price,
+        //         0
+        //     )
+        // ),
+        const IsProductInState = computed(
+            (): boolean => !(getTotalAmount.value === 0)
+        )
 
+        const getTotalAmount = computed(() =>
+            cart.value.reduce((partialSum, product) => partialSum + product.amount, 0)
+        )
 
-        const findIndexById = (id: string) =>
-            state.findIndex((product) => {
-                return product.id === id;
-            });
-        const IsInDatabase = (id: string) =>
-            state.findIndex((product) => product.id === id) === -1 ? false : true;
-        const takePayments = () => {
+        const increaseAmount = (id: string) => {
+            const index = findIndexById(id);
+
+            cart.value[index] = {
+                amount: cart.value[index].amount + 1,
+                id,
+                product: cart.value[index].product,
+            };
+
+        }
+        const decreaseAmount = (id: string) => {
+            const index = findIndexById(id);
+
+            if (index === -1) return;
+
+            cart.value[index] = {
+                amount: cart.value[index].amount - 1,
+                id,
+                product: cart.value[index].product,
+            };
+        }
+
+        const createProduct = (product: Product) => {
+
+            cart.value.push({ product, amount: 1, id: product.id });
+        }
+        const emptyCart = () => cart.value.splice(0)
+
+        const deleteProduct = (id: string) => {
+            if (!IsInDatabase(id)) return;
+        }
+        const getCart = computed(() => {
+            return cart
+        })
+
+        takePayments: () => {
             useFetch(
                 'http://vue-deno-39scww-31cecd-168-119-233-159.traefik.me/create-payment-intent',
                 {
@@ -102,12 +86,21 @@ export const useCartStore = defineStore(
                         return ctx;
                     },
                 }
-            ).post(state);
-        };
+            ).post();
+        }
 
-        return cart;
+
+        const findIndexById = (id: string) =>
+            cart.value.findIndex((product) => {
+                return product.id === id;
+            });
+        const IsInDatabase = (id: string) =>
+            cart.value.findIndex((product) => product.id === id) === -1 ? false : true;
+
+
+        return { cart, getTotalAmount, createProduct, IsProductInCart, increaseAmount }
     },
     {
-        persist: true,
+        persist: true
     }
 );
