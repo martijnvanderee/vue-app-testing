@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-import { useFetch } from '@vueuse/core';
 import type { Cart, Product } from "../types/index"
 // import { Product, Cart } from "../types";
 // import { productPath, productFileToProduct } from "../util/constants";
@@ -33,9 +32,9 @@ export const useCartStore = defineStore(
         //         0
         //     )
         // ),
-        const IsProductInState = computed(
-            (): boolean => !(getTotalAmount.value === 0)
-        )
+        // const IsProductInState = computed(
+        //     (): boolean => !(getTotalAmount.value === 0)
+        // )
 
         const getTotalAmount = computed(() =>
             cart.value.reduce((partialSum, product) => partialSum + product.amount, 0)
@@ -51,43 +50,43 @@ export const useCartStore = defineStore(
             };
 
         }
-        const decreaseAmount = (id: string) => {
-            const index = findIndexById(id);
+        // const decreaseAmount = (id: string) => {
+        //     const index = findIndexById(id);
 
-            if (index === -1) return;
+        //     if (index === -1) return;
 
-            cart.value[index] = {
-                amount: cart.value[index].amount - 1,
-                id,
-                product: cart.value[index].product,
-            };
-        }
+        //     cart.value[index] = {
+        //         amount: cart.value[index].amount - 1,
+        //         id,
+        //         product: cart.value[index].product,
+        //     };
+        // }
 
         const createProduct = (product: Product) => {
 
             cart.value.push({ product, amount: 1, id: product.id });
         }
-        const emptyCart = () => cart.value.splice(0)
+        // const emptyCart = () => cart.value.splice(0)
 
-        const deleteProduct = (id: string) => {
-            if (!IsInDatabase(id)) return;
-        }
-        const getCart = computed(() => {
-            return cart
-        })
+        // const deleteProduct = (id: string) => {
+        //     if (!IsInDatabase(id)) return;
+        // }
+        // const getCart = computed(() => {
+        //     return cart
+        // })
 
-        takePayments: () => {
-            useFetch(
-                'http://vue-deno-39scww-31cecd-168-119-233-159.traefik.me/create-payment-intent',
-                {
-                    afterFetch(ctx) {
-                        window.location.href = ctx.data;
+        // takePayments: () => {
+        //     useFetch(
+        //         'http://vue-deno-39scww-31cecd-168-119-233-159.traefik.me/create-payment-intent',
+        //         {
+        //             afterFetch(ctx) {
+        //                 window.location.href = ctx.data;
 
-                        return ctx;
-                    },
-                }
-            ).post();
-        }
+        //                 return ctx;
+        //             },
+        //         }
+        //     ).post();
+        // }
 
 
         const findIndexById = (id: string) =>
