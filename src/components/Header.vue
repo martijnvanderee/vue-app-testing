@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import CartIcon from './CartIcon.vue';
+import { RouterLink } from 'vue-router';
 </script>
 
 <template>
@@ -25,6 +26,8 @@ import CartIcon from './CartIcon.vue';
           <ul
             class="hidden lg:flex items-center justify-start gap-6 md:gap-8 py-3 sm:justify-center"
           >
+            <RouterLink to="/">Go to Home</RouterLink>
+            <RouterLink to="/about">Go to About</RouterLink>
             <li>
               <a
                 href="#"
