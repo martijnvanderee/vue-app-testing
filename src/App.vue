@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { onBeforeMount } from 'vue';
+import { onMounted } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useProductStore } from './store/product';
-import { useCartStore } from './store/cart';
 import { useFetch } from '@vueuse/core';
 
 import Products from './components/Products.vue';
 import Header from './components/Header.vue';
 
-const { products, getProducts } = useProductStore();
-const { cart } = useCartStore();
+const store = useProductStore();
 
-onBeforeMount(() => {
-  getProducts();
+onMounted(() => {
+  store.getProducts();
 });
+
+const { products } = storeToRefs(store);
 
 const takePayments = () => {
   useFetch(
@@ -29,7 +30,6 @@ const takePayments = () => {
 </script>
 
 <template>
-  {{ cart }}
   <button @click="takePayments">payments</button>
   <Header />
   <div>
