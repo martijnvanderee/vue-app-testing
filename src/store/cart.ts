@@ -93,8 +93,8 @@ export const useCartStore = defineStore(
             cart.value.findIndex((product) => {
                 return product.id === id;
             });
-        const IsInDatabase = (id: string) =>
-            cart.value.findIndex((product) => product.id === id) === -1 ? false : true;
+        // const IsInDatabase = (id: string) =>
+        //     cart.value.findIndex((product) => product.id === id) === -1 ? false : true;
 
 
         return { cart, getTotalAmount, createProduct, IsProductInCart, increaseAmount }
