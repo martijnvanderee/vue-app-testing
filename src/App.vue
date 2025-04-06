@@ -38,7 +38,6 @@ const takePayments = () => {
 </script>
 
 <template>
-  a: {{ a }}
   <button @click="takePayments">payments</button>
   <Header />
   <div>
