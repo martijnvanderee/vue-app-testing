@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { type Product } from '../types';
 import { useCartStore } from '../store/cart';
+import { numberToEuro } from '../helpers/index';
 
 interface Props {
   product: Product;
@@ -17,6 +19,13 @@ const addProduct = () => {
 };
 
 const handleButton = () => addProduct();
+
+const price = computed(() => {
+  if (typeof props.product.price?.unit_amount === 'number') {
+    return numberToEuro(props.product.price?.unit_amount);
+  }
+  return 'Prijs is onbekend';
+});
 </script>
 
 <template>
@@ -239,7 +248,7 @@ const handleButton = () => addProduct();
         <p
           class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white"
         >
-          $1,699
+          {{ price }}
         </p>
         <button
           @click="handleButton"

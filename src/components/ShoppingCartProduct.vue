@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, computed } from 'vue';
 
 import { type Cart } from '../types';
 import { useCartStore } from '../store/cart';
+import { numberToEuro } from '../helpers/index';
 
 interface Props {
   cart: Cart;
@@ -15,6 +16,15 @@ const { deleteProduct, increaseAmount, decreaseAmount } = useCartStore();
 const handleRemoveButton = () => {
   deleteProduct(props.cart.id);
 };
+
+const price = computed(() => {
+  if (typeof props.cart.product.price?.unit_amount === 'number') {
+    return numberToEuro(
+      props.cart.amount * props.cart.product.price?.unit_amount
+    );
+  }
+  return 'Prijs is onbekend';
+});
 </script>
 
 <template>
@@ -98,7 +108,7 @@ const handleRemoveButton = () => {
         </div>
         <div class="text-end md:order-4 md:w-32">
           <p class="text-base font-bold text-gray-900 dark:text-white">
-            $1,499
+            {{ price }}
           </p>
         </div>
       </div>
