@@ -50,17 +50,17 @@ export const useCartStore = defineStore(
             };
 
         }
-        // const decreaseAmount = (id: string) => {
-        //     const index = findIndexById(id);
+        const decreaseAmount = (id: string) => {
+            const index = findIndexById(id);
 
-        //     if (index === -1) return;
+            if (index === -1) return;
 
-        //     cart.value[index] = {
-        //         amount: cart.value[index].amount - 1,
-        //         id,
-        //         product: cart.value[index].product,
-        //     };
-        // }
+            cart.value[index] = {
+                amount: cart.value[index].amount - 1,
+                id,
+                product: cart.value[index].product,
+            };
+        }
 
         const createProduct = (product: Product) => {
 
@@ -68,9 +68,13 @@ export const useCartStore = defineStore(
         }
         // const emptyCart = () => cart.value.splice(0)
 
-        // const deleteProduct = (id: string) => {
-        //     if (!IsInDatabase(id)) return;
-        // }
+        const deleteProduct = (id: string) => {
+            const index = findIndexById(id);
+
+            const newCart = cart.value.splice(index, index);
+
+            cart.value = newCart
+        }
         // const getCart = computed(() => {
         //     return cart
         // })
@@ -97,7 +101,7 @@ export const useCartStore = defineStore(
         //     cart.value.findIndex((product) => product.id === id) === -1 ? false : true;
 
 
-        return { cart, getTotalAmount, createProduct, IsProductInCart, increaseAmount }
+        return { cart, getTotalAmount, createProduct, IsProductInCart, increaseAmount, decreaseAmount, deleteProduct }
     },
     {
         persist: true

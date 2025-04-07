@@ -1,7 +1,7 @@
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createWebHistory, createRouter } from 'vue-router'
 
-import Home from './components/Header.vue';
-import About from './components/Products.vue';
+import Home from './views/Home.vue';
+import Cart from './views/Cart.vue';
 
 const routes = [
     {
@@ -9,12 +9,12 @@ const routes = [
         component: Home,
     },
     {
-        path: '/about',
-        name: 'about',
-        component: About,
+        path: '/cart',
+        name: 'cart',
+        component: Cart,
     }
 ];
 export const router = createRouter({
-    history: createMemoryHistory(),
+    history: createWebHistory(),
     routes,
 })

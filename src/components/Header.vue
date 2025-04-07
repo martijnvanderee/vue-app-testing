@@ -9,7 +9,7 @@ import { RouterLink } from 'vue-router';
       <div class="flex items-center justify-between">
         <div class="flex items-center space-x-8">
           <div class="shrink-0">
-            <a href="#" title="" class="">
+            <RouterLink to="/">
               <img
                 class="block w-auto h-8 dark:hidden"
                 src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full.svg"
@@ -20,14 +20,12 @@ import { RouterLink } from 'vue-router';
                 src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full-dark.svg"
                 alt=""
               />
-            </a>
+            </RouterLink>
           </div>
 
           <ul
             class="hidden lg:flex items-center justify-start gap-6 md:gap-8 py-3 sm:justify-center"
           >
-            <RouterLink to="/">Go to Home</RouterLink>
-            <RouterLink to="/about">Go to About</RouterLink>
             <li>
               <a
                 href="#"
@@ -77,33 +75,35 @@ import { RouterLink } from 'vue-router';
         </div>
 
         <div class="flex items-center lg:space-x-2">
-          <button
-            id="myCartDropdownButton1"
-            data-dropdown-toggle="myCartDropdown1"
-            type="button"
-            class="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
-          >
-            <span class="sr-only"> Cart </span>
-            <CartIcon />
-            <span class="hidden sm:flex">My Cart</span>
-            <svg
-              class="hidden sm:flex w-4 h-4 text-gray-900 dark:text-white ms-1"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
+          <RouterLink to="/cart">
+            <button
+              id="myCartDropdownButton1"
+              data-dropdown-toggle="myCartDropdown1"
+              type="button"
+              class="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
             >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m19 9-7 7-7-7"
-              />
-            </svg>
-          </button>
+              <span class="sr-only"> Cart </span>
+              <CartIcon />
+              <span class="hidden sm:flex">My Cart</span>
+              <svg
+                class="hidden sm:flex w-4 h-4 text-gray-900 dark:text-white ms-1"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m19 9-7 7-7-7"
+                />
+              </svg>
+            </button>
+          </RouterLink>
 
           <div
             id="myCartDropdown1"

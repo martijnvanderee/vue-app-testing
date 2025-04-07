@@ -20,6 +20,29 @@ export interface Product {
     unit_label: any;
     updated: number;
     url: any;
+    price?: Prices
+}
+
+export interface Prices {
+    id: string
+    object: string
+    active: boolean
+    billing_scheme: string
+    created: number
+    currency: string
+    custom_unit_amount: any
+    livemode: boolean
+    lookup_key: any
+    metadata: {}
+    nickname: any
+    product: string
+    recurring: any
+    tax_behavior: string
+    tiers_mode: any
+    transform_quantity: any
+    type: string
+    unit_amount: number
+    unit_amount_decimal: string
 }
 
 export interface Cart {
