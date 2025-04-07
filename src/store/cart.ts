@@ -2,9 +2,8 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import type { Cart, Product } from "../types/index"
 // import { Product, Cart } from "../types";
-// import { productPath, productFileToProduct } from "../util/constants";
 
-// import { useRuntimeConfig } from "nuxt/app";
+import { useFetch } from '@vueuse/core';
 
 
 
@@ -25,13 +24,17 @@ export const useCartStore = defineStore(
                 return product.id === id
             })
         })
-        // getTotalPrice: computed(() =>
-        //     state.reduce(
-        //         (partialSum, product) =>
-        //             partialSum + product.amount * product.product.price,
-        //         0
-        //     )
-        // ),
+        const getTotalPrice = computed(() => {
+            return (
+
+                (cart.value.reduce(
+                    (partialSum, product) => {
+                        const price = product.product.price?.unit_amount ?? 0
+                        return (partialSum + product.amount * price)
+                    },
+                    0
+                )) / 100)
+        })
         // const IsProductInState = computed(
         //     (): boolean => !(getTotalAmount.value === 0)
         // )
@@ -71,7 +74,9 @@ export const useCartStore = defineStore(
         const deleteProduct = (id: string) => {
             const index = findIndexById(id);
 
-            const newCart = cart.value.splice(index, index);
+            console.log(index, cart.value)
+
+            const newCart = cart.value.filter((num, i) => i !== index)
 
             cart.value = newCart
         }
@@ -101,7 +106,26 @@ export const useCartStore = defineStore(
         //     cart.value.findIndex((product) => product.id === id) === -1 ? false : true;
 
 
-        return { cart, getTotalAmount, createProduct, IsProductInCart, increaseAmount, decreaseAmount, deleteProduct }
+        const CartApi = computed(() =>
+            cart.value.map((item) => {
+                return { quantity: item.amount, price: item.product.default_price };
+            })
+        );
+
+        const takePayments = () => {
+            useFetch(
+                'http://vue-deno-39scww-31cecd-168-119-233-159.traefik.me/create-payment-intent',
+                {
+                    afterFetch(ctx) {
+                        window.location.href = ctx.data;
+
+                        return ctx;
+                    },
+                }
+            ).post(CartApi.value);
+        };
+
+        return { cart, getTotalAmount, takePayments, createProduct, IsProductInCart, increaseAmount, decreaseAmount, deleteProduct, getTotalPrice }
     },
     {
         persist: true

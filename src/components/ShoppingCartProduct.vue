@@ -17,10 +17,18 @@ const handleRemoveButton = () => {
   deleteProduct(props.cart.id);
 };
 
+const handleDecreaseAmount = () => {
+  if (props.cart.amount <= 1 || props.cart.amount === 1) {
+    return;
+  } else {
+    decreaseAmount(props.cart.id);
+  }
+};
+
 const price = computed(() => {
   if (typeof props.cart.product.price?.unit_amount === 'number') {
     return numberToEuro(
-      props.cart.amount * props.cart.product.price?.unit_amount
+      (props.cart.amount * props.cart.product.price?.unit_amount) / 100
     );
   }
   return 'Prijs is onbekend';
@@ -51,7 +59,7 @@ const price = computed(() => {
       <div class="flex items-center justify-between md:order-3 md:justify-end">
         <div class="flex items-center">
           <button
-            @click="decreaseAmount(props.cart.id)"
+            @click="handleDecreaseAmount()"
             type="button"
             id="decrement-button"
             data-input-counter-decrement="counter-input"

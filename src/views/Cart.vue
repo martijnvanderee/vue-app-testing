@@ -1,11 +1,17 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import ShoppingCartProduct from '../components/ShoppingCartProduct.vue';
 import { storeToRefs } from 'pinia';
 
 import { useCartStore } from '../store/cart';
+import { numberToEuro } from '../helpers/index';
+import { RouterLink } from 'vue-router';
+const cartStore = useCartStore();
+const { cart, getTotalPrice } = storeToRefs(cartStore);
 
-const test = useCartStore();
-const { cart } = storeToRefs(test);
+const totalPrice = computed(() => {
+  return numberToEuro(getTotalPrice.value);
+});
 </script>
 
 <template>
@@ -377,16 +383,18 @@ const { cart } = storeToRefs(test);
                   Total
                 </dt>
                 <dd class="text-base font-bold text-gray-900 dark:text-white">
-                  $8,191.00
+                  {{ totalPrice }}
                 </dd>
               </dl>
             </div>
 
-            <a
+            <button
+              @click="cartStore.takePayments"
               href="#"
               class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-              >Proceed to Checkout</a
             >
+              Proceed to Checkout
+            </button>
 
             <div class="flex items-center justify-center gap-2">
               <span
@@ -394,11 +402,7 @@ const { cart } = storeToRefs(test);
               >
                 or
               </span>
-              <a
-                href="#"
-                title=""
-                class="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-primary-500"
-              >
+              <RouterLink to="/">
                 Continue Shopping
                 <svg
                   class="h-5 w-5"
@@ -415,7 +419,7 @@ const { cart } = storeToRefs(test);
                     d="M19 12H5m14 0-4 4m4-4-4-4"
                   />
                 </svg>
-              </a>
+              </RouterLink>
             </div>
           </div>
 

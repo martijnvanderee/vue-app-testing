@@ -4,3 +4,6 @@ export const numberToEuro = (price: number) => {
         currency: 'EUR',
     }).format(price).replace(/^(\D+)/, '$1 ').replace(/\s+/, ' ');
 }
+
+
+

@@ -22,7 +22,7 @@ const handleButton = () => addProduct();
 
 const price = computed(() => {
   if (typeof props.product.price?.unit_amount === 'number') {
-    return numberToEuro(props.product.price?.unit_amount);
+    return numberToEuro(props.product.price?.unit_amount / 100);
   }
   return 'Prijs is onbekend';
 });
@@ -129,7 +129,7 @@ const price = computed(() => {
       <a
         href="#"
         class="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
-        >Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max</a
+        >{{ props.product.name }}</a
       >
 
       <div class="mt-2 flex items-center gap-2">
@@ -253,7 +253,7 @@ const price = computed(() => {
         <button
           @click="handleButton"
           type="button"
-          class="cursor-pointer inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          class="cursor-pointer inline-flex items-center rounded-lg bg-purple-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-500 focus:outline-none focus:ring-4 focus:ring-primary-300 bg-primary-600 hover:bg-primary-700 focus:ring-primary-800"
         >
           <svg
             class="-ms-2 me-2 h-5 w-5"
