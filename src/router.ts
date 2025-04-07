@@ -12,7 +12,7 @@ const routes = [
         path: '/cart',
         name: 'cart',
         component: Cart,
-    }
+    }, { path: '/:pathMatch(.*)*', name: 'not-found', component: Home },
 ];
 export const router = createRouter({
     history: createWebHistory(),

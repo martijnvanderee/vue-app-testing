@@ -76,7 +76,7 @@ export const useCartStore = defineStore(
 
             console.log(index, cart.value)
 
-            const newCart = cart.value.filter((num, i) => i !== index)
+            const newCart = cart.value.filter((_, i) => i !== index)
 
             cart.value = newCart
         }
